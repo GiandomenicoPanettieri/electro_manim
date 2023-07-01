@@ -1,0 +1,8 @@
+from manim import *
+from ELECTRONIC_MANIM import *
+
+#this code creates a parllel RLC resonator
+
+class Myscene(Scene): 
+
+    def construct(self):

@@ -1,0 +1,21 @@
+from manim import *
+    
+class Myscene(Scene):
+        
+    def construct(self):
+        circle = Circle ()
+        circle.set_opacity(1)
+
+        self.play(Write(circle))
+        self.wait(2)
+
+        self.play(circle.animate.set_fill(BLUE).set_stroke(YELLOW))
+        self.wait(2)
+        self.play(circle.animate.set_stroke_width(25))
+        self.wait(2)
+        self.play(circle.animate.set_stroke(GREEN))
+        self.wait(2)
+        self.play(circle.animate.scale(9),run_time=5)
+        self.wait(3)
+        self.play(FadeOut(circle))
+        self.wait(3)

@@ -1,0 +1,28 @@
+from manim import *
+from NetList import *
+from components import *
+from utils import *
+
+
+class Myscene(Scene): 
+
+    def construct(self):
+        #optional plane to get a cartesian system of coordinates
+        #plane = NumberPlane()
+        #self.add(plane)
+
+        self.Wait(1)
+
+
+
+        
+        
+
+
+
+
+
+        
+          
+
+        

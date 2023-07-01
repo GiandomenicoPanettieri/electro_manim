@@ -1,5 +1,7 @@
 from manim import *
-from ELECTRONIC_MANIM import *
+from NetList import *
+from components import *
+from utils import *
 
 #
 
@@ -19,10 +21,32 @@ class Myscene(Scene):
         M1_img = M1.get_group()
         self.add(M1_img)
 
-        Net_List = [
-            connect_terminal(Rd.n1,M1.nd),
-            connect_terminal(M1.ng,[-1,1,0]),
-            connect_terminal([-1,1,0],[0,1,0])
+        
+        net_list = Net()
+
+        line_list = [
+            connect_terminal(M1.nd,Rd.n1),
+            connect_terminal([0,1,0],[-1,1,0])
         ]
-        net_img = net_mobject(Net_List)
-        self.add(net_img)       
+        sub_net_1 = Net(line_list)
+        
+        line_list = connect_nodes_oriented(
+            [[0,1,0],
+            [1,1,0]]
+        )
+        sub_net_2 = Net(line_list)
+
+        net_list.merge_subnet(sub_net_1)
+        net_list.merge_subnet(sub_net_2)
+
+        net_list_img=net_list.net_mobject()
+        self.add(net_list_img)
+
+
+
+
+
+        
+          
+
+        

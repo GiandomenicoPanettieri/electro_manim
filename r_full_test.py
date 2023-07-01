@@ -35,7 +35,7 @@ class Myscene(Scene):
         GND1 = GND(" ",0,-3,1)
         GND1_img = GND1.get_group()
 
-        self.play(M1_img.invert)
+        
 
         self.wait(2)
 

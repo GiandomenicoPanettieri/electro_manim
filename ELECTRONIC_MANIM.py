@@ -114,8 +114,18 @@ class component():
         self.value_right_shift_offset=value_right_shift_offset
         self.name_up_shift_offset=name_up_shift_offset
         self.value_up_shift_offset=value_up_shift_offset
-        
 
+        self.name = Text(
+            name,
+            font_size = 30*size*name_font_scale,
+        )
+
+        self.name.shift(UP*0.25*size
+                          +RIGHT*(0.5)*size
+                          +RIGHT*(x0+name_right_shift_offset)
+                          +UP*(y0+name_up_shift_offset))
+        
+################################ RESISTOR ##################################
 
 class R(component):
     def __init__(self, name, x0,y0,size,value_text,
@@ -127,20 +137,11 @@ class R(component):
                  name_right_shift_offset=0,value_right_shift_offset=0,
                  name_up_shift_offset=0,value_up_shift_offset=0)
 
-        self.R_name = Text(
-            name,
-            font_size = 30*size*name_font_scale
-        )
-
         self.R_value = Text(
             value_text,
             font_size = 30*size*value_font_scale
         )
         
-        self.R_name.shift(UP*0.25*size
-                          +RIGHT*(0.5)*size
-                          +RIGHT*(x0+name_right_shift_offset)
-                          +UP*(y0+name_up_shift_offset))
         self.R_value.shift(DOWN*0.25*size
                            +RIGHT*0.5*size
                            +RIGHT*(x0+value_right_shift_offset)
@@ -148,13 +149,13 @@ class R(component):
 
         self.R_img = ImageMobject("texture\R").scale(0.1746442432*size)
         self.R_img = self.R_img.shift(RIGHT*x0+UP*y0)
-        self.n1 = [x0, y0+0.5*size]
-        self.n2 = [x0, y0-0.5*size]
+        self.n0 = [x0, y0+0.5*size, 0]
+        self.n1 = [x0, y0-0.5*size, 0]
     
     def get_group(self):
-        return Group(self.R_img,self.R_name,self.R_value)
+        return Group(self.R_img,self.name,self.R_value)
     
-
+################################ CAPACITOR ##################################
 
 class C(component):
     def __init__(self, name, x0,y0,size,value_text,name_font_scale=1,
@@ -168,20 +169,11 @@ class C(component):
 
         self.value_text=value_text
 
-        self.C_name = Text(
-            name,
-            font_size = 30*size*name_font_scale
-        )
-
         self.C_value = Text(
             value_text,
             font_size = 30*size*value_font_scale
         )
 
-        self.C_name.shift(UP*0.25*size
-                          +RIGHT*(0.5)*size
-                          +RIGHT*(x0+name_right_shift_offset)
-                          +UP*(y0+name_up_shift_offset))
         self.C_value.shift(DOWN*0.25*size
                            +RIGHT*0.5*size
                            +RIGHT*(x0+value_right_shift_offset)
@@ -189,12 +181,13 @@ class C(component):
 
         self.C_img = ImageMobject("texture\C").scale(0.1642335766*size)
         self.C_img = self.C_img.shift(RIGHT*x0+UP*y0)
-        self.n1 = [x0, y0+0.5*size]
-        self.n2 = [x0, y0-0.5*size]
+        self.n0 = [x0, y0+0.5*size, 0]
+        self.n1 = [x0, y0-0.5*size, 0]
     
     def get_group(self):
-        return Group(self.C_img,self.C_name,self.C_value)
+        return Group(self.C_img,self.name,self.C_value)
 
+#################################  INDUCTOR ################################
 class L(component):
     def __init__(self, name, x0,y0,size,value_text,name_font_scale=1,
                  value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
@@ -203,30 +196,88 @@ class L(component):
                  name_font_scale=1,value_font_scale=1,
                  name_right_shift_offset=0,value_right_shift_offset=0,
                  name_up_shift_offset=0,value_up_shift_offset=0)
-        
-        self.L_name = Text(
-            name,
-            font_size = 30*size*name_font_scale
-        )
 
         self.L_value = Text(
             value_text,
             font_size = 30*size*value_font_scale
         )
 
-        self.L_name.shift(UP*0.25*size
+        self.name.shift(UP*0.25*size
                           +RIGHT*(0.5)*size
                           +RIGHT*(x0+name_right_shift_offset)
                           +UP*(y0+name_up_shift_offset))
-        self.L_value.shift(DOWN*0.25*size
-                           +RIGHT*0.5*size
-                           +RIGHT*(x0+value_right_shift_offset)
-                           +UP*(y0+value_up_shift_offset))
+
         self.L_img = ImageMobject("texture\L").scale(0.1735218509*size)  
         self.L_img = self.L_img.shift(RIGHT*x0+UP*y0)
-        self.n1 = [x0, y0+0.5*size]
-        self.n2 = [x0, y0-0.5*size]
+        self.n0 = [x0, y0+0.5*size, 0]
+        self.n1 = [x0, y0-0.5*size, 0]
     
     def get_group(self):
-        return Group(self.L_img,self.L_name,self.L_value)
+        return Group(self.L_img,self.name,self.L_value)
+    
 
+#################################  INDUCTOR ################################
+class NMOS(component):
+    def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0)
+
+        self.name.shift(UP*0.25*size
+                          +RIGHT*(0.5)*size
+                          +RIGHT*(x0+name_right_shift_offset)
+                          +UP*(y0+name_up_shift_offset))
+
+        self.NMOS_img = ImageMobject("texture\\NMOS").scale(size/8)  
+        self.NMOS_img = self.NMOS_img.shift(RIGHT*x0+UP*y0)
+        self.n0 = [x0, y0+0.5*size, 0]
+        self.n1 = [x0, y0-0.5*size, 0]
+    
+    def get_group(self):
+        return Group(self.NMOS_img,self.name)
+    
+###############################         NODE         ################################
+class node(component):
+    def __init__(self, name, x0,y0,size=1,value_text=" ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0, color=WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0)
+        
+        self.node_name = Text(
+            name,
+            font_size = 30*size*name_font_scale,
+            color = color
+        )
+
+        self.node_name.shift(UP*0.25*size
+                          +RIGHT*(0.25)*size
+                          +RIGHT*(x0+name_right_shift_offset)
+                          +UP*(y0+name_up_shift_offset))
+        self.my_dot = Dot(color=color).shift(RIGHT*(x0+name_right_shift_offset)
+                                            +UP*(y0+name_up_shift_offset))
+    
+        self.n0 = [x0, y0, 0]
+    
+    def get_group(self):
+        return Group(self.my_dot,self.node_name)
+    
+
+###############################  RELATED FUNCTIONS  #################################
+def connect_terminal(n0,n1,color = WHITE):
+    return Line(n0,n1,color=color)
+
+def net_mobject(net_list):
+    net_list_object_temp = net_list[0]
+    if len(net_list) == 1 :
+        return net_list_object_temp
+    else:
+        for i in range(1, len(net_list)):
+            net_list_object = Group(net_list_object_temp,net_list[i])
+            net_list_object_temp = net_list_object
+        return net_list_object

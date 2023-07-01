@@ -7,23 +7,30 @@ class Myscene(Scene):
 
     def construct(self):
         #optional plane to get a cartesian system of coordinates
-        plane = NumberPlane()
-        self.add(plane)
+        #plane = NumberPlane()
+        #self.add(plane)
 
-        R1=R("R1",0,0,1,"1k")
+        R1 = R(name="R1", x0=-3,
+               y0=1, size=2,value_text="3k",value_font_scale=0.7,
+               value_up_shift_offset=0)
         R1_img=R1.get_group()
-        '''R = ImageMobject("texture\R").scale(0.18)
-        R = R.shift(RIGHT*0.014)
-        n1 = [0, 0.5]0
-        n2 = [0, -0.5]'''
 
-        R1_img.shift(1*RIGHT+1*UP)
-        self.add(R1_img)
-        self.play(
-            Rotate(
-                R1_img,
-                angle=12*PI,
-                rate_func=linear,
-                about_point =(0,0,0),
-                run_time=6)
-        )
+        L1 = L(name="R1",value_text="17.4n",x0=3,y0=1,
+               size=2,value_font_scale=0.8,value_right_shift_offset=0.4)
+        L1_img = L1.get_group()
+
+        C1 = C("C1",0,1,2,"100p",1,0.6, name_up_shift_offset=0)
+        C1_img = C1.get_group()
+
+        R1L1C1=Group(R1_img,L1_img,C1_img)
+        self.play(FadeIn(R1L1C1))
+        self.wait(3)
+
+
+
+        
+        
+        
+        
+
+        

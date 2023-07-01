@@ -1,6 +1,5 @@
 from manim import *
 
-
 class circuit():
 
     def resonator(Lname,Cname,Rname,Lvalue,Cvalue,Rvalue):
@@ -69,26 +68,134 @@ class animated_circuit(Scene):
         return Group(L1,C1,R1,line1,line2,textR1,textC1,textL1)
 
 class component():
-    def __init__(self, name, x0,y0,size):
+    def __init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0):
         self.name=name
         self.x0=x0
         self.y0=y0
         self.size=size
-        
-class R(component):
-    def __init__(self, name, x0,y0,size,value_text):
-        component.__init__(self, name, x0,y0,size)
         self.value_text=value_text
+        self.name_font_scale=name_font_scale
+        self.value_font_scale=value_font_scale
+        self.name_right_shift_offset=name_right_shift_offset
+        self.value_right_shift_offset=value_right_shift_offset
+        self.name_up_shift_offset=name_up_shift_offset
+        self.value_up_shift_offset=value_up_shift_offset
+        
+
+
+class R(component):
+    def __init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0)
+
         self.R_name = Text(
-            name+"\n"+value_text,
-            font_size = 30
+            name,
+            font_size = 30*size*name_font_scale
         )
-        self.R_name.shift(RIGHT*1)
-        self.R_img = ImageMobject("texture\R").scale(0.18*size)
-        self.R_img = self.R_img.shift(RIGHT*0.014)
+
+        self.R_value = Text(
+            value_text,
+            font_size = 30*size*value_font_scale
+        )
+        
+        self.R_name.shift(UP*0.25*size
+                          +RIGHT*(0.5)*size
+                          +RIGHT*(x0+name_right_shift_offset)
+                          +UP*(y0+name_up_shift_offset))
+        self.R_value.shift(DOWN*0.25*size
+                           +RIGHT*0.5*size
+                           +RIGHT*(x0+value_right_shift_offset)
+                           +UP*(y0+value_up_shift_offset))
+
+        self.R_img = ImageMobject("texture\R").scale(0.1746442432*size)
+        self.R_img = self.R_img.shift(RIGHT*x0+UP*y0)
         self.n1 = [x0, y0+0.5*size]
         self.n2 = [x0, y0-0.5*size]
     
     def get_group(self):
-        return Group(self.R_img,self.R_name)
+        return Group(self.R_img,self.R_name,self.R_value)
+    
+
+
+class C(component):
+    def __init__(self, name, x0,y0,size,value_text,name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0):
+        
+        component.__init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0)
+
+        self.value_text=value_text
+
+        self.C_name = Text(
+            name,
+            font_size = 30*size*name_font_scale
+        )
+
+        self.C_value = Text(
+            value_text,
+            font_size = 30*size*value_font_scale
+        )
+
+        self.C_name.shift(UP*0.25*size
+                          +RIGHT*(0.5)*size
+                          +RIGHT*(x0+name_right_shift_offset)
+                          +UP*(y0+name_up_shift_offset))
+        self.C_value.shift(DOWN*0.25*size
+                           +RIGHT*0.5*size
+                           +RIGHT*(x0+value_right_shift_offset)
+                           +UP*(y0+value_up_shift_offset))
+
+        self.C_img = ImageMobject("texture\C").scale(0.1642335766*size)
+        self.C_img = self.C_img.shift(RIGHT*x0+UP*y0)
+        self.n1 = [x0, y0+0.5*size]
+        self.n2 = [x0, y0-0.5*size]
+    
+    def get_group(self):
+        return Group(self.C_img,self.C_name,self.C_value)
+
+class L(component):
+    def __init__(self, name, x0,y0,size,value_text,name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0)
+        
+        self.L_name = Text(
+            name,
+            font_size = 30*size*name_font_scale
+        )
+
+        self.L_value = Text(
+            value_text,
+            font_size = 30*size*value_font_scale
+        )
+
+        self.L_name.shift(UP*0.25*size
+                          +RIGHT*(0.5)*size
+                          +RIGHT*(x0+name_right_shift_offset)
+                          +UP*(y0+name_up_shift_offset))
+        self.L_value.shift(DOWN*0.25*size
+                           +RIGHT*0.5*size
+                           +RIGHT*(x0+value_right_shift_offset)
+                           +UP*(y0+value_up_shift_offset))
+        self.L_img = ImageMobject("texture\L").scale(0.1735218509*size)  
+        self.L_img = self.L_img.shift(RIGHT*x0+UP*y0)
+        self.n1 = [x0, y0+0.5*size]
+        self.n2 = [x0, y0-0.5*size]
+    
+    def get_group(self):
+        return Group(self.L_img,self.L_name,self.L_value)
 

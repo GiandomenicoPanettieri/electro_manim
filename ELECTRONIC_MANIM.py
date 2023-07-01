@@ -67,6 +67,37 @@ class animated_circuit(Scene):
         self.play(textR1.animate.shift(RIGHT*1), run_time = 0.3)
         return Group(L1,C1,R1,line1,line2,textR1,textC1,textL1)
 
+############################### COMPONENT CLASS ##############################
+'''
+V1.1 components available are 
+    R   resistor
+    C   capacitor
+    L   inductor
+
+each component has usefull parameters for animation. Some of those are mandatory
+    
+    --MANDATORY PARAMETERS FOR COMPONENTS--
+    name                        name in the animation of the component
+    value_text                  value of the main physiscal property. if no, give " " 
+    x0,y0                       center coordinates
+    size        
+    --NOT MANDATORY PARAMETERS--
+    name_font_scale             resizes the name in the animation
+    value_font_scale            resizes the value in the animation
+    name_right_shift_offset
+    value_right_shift_offset
+    name_up_shift_offset
+    value_right_shift_offset     
+
+
+to get the group of the component+name+value as a Mobject, the method get_group()
+is required. Moreover, each component comes with the location in the plane of
+the terminals (nodes n1, n2)
+
+'''
+
+
+
 class component():
     def __init__(self, name, x0,y0,size,value_text,
                  name_font_scale=1,value_font_scale=1,

@@ -216,7 +216,7 @@ class L(component):
         return Group(self.L_img,self.name,self.L_value)
     
 
-#################################  INDUCTOR ################################
+#################################  NMOS ################################
 class NMOS(component):
     def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
                  value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
@@ -226,18 +226,35 @@ class NMOS(component):
                  name_right_shift_offset=0,value_right_shift_offset=0,
                  name_up_shift_offset=0,value_up_shift_offset=0)
 
-        self.name.shift(UP*0.25*size
-                          +RIGHT*(0.5)*size
-                          +RIGHT*(x0+name_right_shift_offset)
-                          +UP*(y0+name_up_shift_offset))
+        self.name.shift(RIGHT*1
+                        +RIGHT*(x0+name_right_shift_offset)
+                        +UP*(y0+name_up_shift_offset))
 
-        self.NMOS_img = ImageMobject("texture\\NMOS").scale(size/8)  
-        self.NMOS_img = self.NMOS_img.shift(RIGHT*x0+UP*y0)
-        self.n0 = [x0, y0+0.5*size, 0]
-        self.n1 = [x0, y0-0.5*size, 0]
+        self.NMOS_img = ImageMobject("texture\\nmos1").scale(0.1175*size)  
+        self.NMOS_img = self.NMOS_img.shift(RIGHT*x0+UP*(y0))
+        self.nd = [x0+0.5*size, y0+0.5*size, 0]
+        self.ns = [x0+0.5*size, y0-0.5*size, 0]
+        self.ng = [x0-0.5*size, y0, 0]
     
     def get_group(self):
         return Group(self.NMOS_img,self.name)
+
+#################################  GROUND ################################
+class GND(component):
+    def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 name_font_scale=1,value_font_scale=1,
+                 name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0)
+
+        self.GND_img = ImageMobject("texture\gnd").scale(0.16687268232385661310259579*0.5*size)  
+        self.GND_img = self.GND_img.shift(RIGHT*x0+UP*(y0))
+        self.n0 = [x0, y0+0.25*size, 0]
+    
+    def get_group(self):
+        return Group(self.GND_img,self.name)
     
 ###############################         NODE         ################################
 class node(component):
@@ -281,3 +298,14 @@ def net_mobject(net_list):
             net_list_object = Group(net_list_object_temp,net_list[i])
             net_list_object_temp = net_list_object
         return net_list_object
+
+def connect_nodes_oriented(node_list):
+    local_node_list = node_list
+    subnet =[]
+    
+    if len(node_list) == 1:
+        return print("node list has less than one node")
+    else:
+        for i in range(0,len(local_node_list)-1):
+            subnet.append(connect_terminal(local_node_list[i],local_node_list[i+1]))
+    return subnet

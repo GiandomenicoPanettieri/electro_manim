@@ -18,7 +18,7 @@ class Myscene(Scene):
 
         
         Rs = R( name = "Rs", value_text="2k",
-                x0=0,y0=-1.5, size=1)
+                x0=0,y0=-1.5, size=1, color_name=RED)
         Rs_img = Rs.get_group()
 
         Cs = C( name = "Cs", value_text = "1n",
@@ -26,7 +26,7 @@ class Myscene(Scene):
                )
         Cs_img = Cs.get_group()
 
-        M1 = NMOS(name = "M1", x0=-0.5 , y0=0, size=1)
+        M1 = NMOSB(name = "M1", x0=-0.5 , y0=0, size=1)
         M1_img = M1.get_group()
 
         

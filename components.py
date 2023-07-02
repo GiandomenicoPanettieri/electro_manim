@@ -87,7 +87,7 @@ class R(component):
                            +RIGHT*(x0+value_right_shift_offset)
                            +UP*(y0+value_up_shift_offset))
 
-        self.img = ImageMobject("texture\R").scale(0.1746442432*size)
+        self.img = ImageMobject("texture\R").scale(0.1756442432*size)
         self.img = self.img.shift(RIGHT*x0+UP*y0)
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
@@ -162,7 +162,7 @@ class L(component):
         return Group(self.img,self.name,self.value)
     
 
-#################################  NMOS ################################
+#################################  TRANSISTOR ################################
 class NMOSA(component):
     def __init__(self, name, x0,y0,size,value_text=" ",name_font_scale=1,
                  value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
@@ -206,6 +206,145 @@ class NMOSB(component):
     
     def get_group(self):
         return Group(self.img,self.name)
+    
+
+
+class PMOSA(component):
+    def __init__(self, name, x0,y0,size,value_text=" ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name, color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+
+        self.name.shift(RIGHT*0.5*size)
+
+        self.img = ImageMobject("texture\pmos1").scale(0.15089880304678998911860718171926*size)  
+        self.img = self.img.shift(RIGHT*x0+UP*(y0))
+        self.ns = [x0+0.5*size, y0+0.5*size, 0]
+        self.nd = [x0+0.5*size, y0-0.5*size, 0]
+        self.ng = [x0-0.5*size, y0, 0]
+    
+    def get_group(self):
+        return Group(self.img,self.name)
+
+class PMOSB(component):
+    def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name, color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+
+        self.name.shift(RIGHT*(-1.5)*size)
+
+        self.img = ImageMobject("texture\pmos2").scale(0.15089880304678998911860718171926*size)  
+        self.img = self.img.shift(RIGHT*x0+UP*(y0))
+        self.ns = [x0-0.5*size, y0+0.5*size, 0]
+        self.nd = [x0-0.5*size, y0-0.5*size, 0]
+        self.ng = [x0+0.5*size, y0, 0]
+    
+    def get_group(self):
+        return Group(self.img,self.name)
+    
+
+class NPNA(component):
+    def __init__(self, name, x0,y0,size,value_text=" ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name, color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+
+        self.name.shift(RIGHT*0.5*size)
+
+        self.img = ImageMobject("texture\\npn1").scale(0.15089880304678998911860718171926*size)  
+        self.img = self.img.shift(RIGHT*x0+UP*(y0))
+        self.nc = [x0+0.5*size, y0+0.5*size, 0]
+        self.ne = [x0+0.5*size, y0-0.5*size, 0]
+        self.nb = [x0-0.5*size, y0, 0]
+    
+    def get_group(self):
+        return Group(self.img,self.name)
+
+class NPNB(component):
+    def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name, color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+
+        self.name.shift(RIGHT*(-1.5)*size)
+
+        self.img = ImageMobject("texture\\npn2").scale(0.15089880304678998911860718171926*size)  
+        self.img = self.img.shift(RIGHT*x0+UP*(y0))
+        self.nc = [x0-0.5*size, y0+0.5*size, 0]
+        self.ne = [x0-0.5*size, y0-0.5*size, 0]
+        self.nb = [x0+0.5*size, y0, 0]
+    
+    def get_group(self):
+        return Group(self.img,self.name)
+    
+
+class PNPA(component):
+    def __init__(self, name, x0,y0,size,value_text=" ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name, color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+
+        self.name.shift(RIGHT*0.5*size)
+
+        self.img = ImageMobject("texture\pnp1").scale(0.15089880304678998911860718171926*size)  
+        self.img = self.img.shift(RIGHT*x0+UP*(y0))
+        self.ne = [x0+0.5*size, y0+0.5*size, 0]
+        self.nc = [x0+0.5*size, y0-0.5*size, 0]
+        self.nb = [x0-0.5*size, y0, 0]
+    
+    def get_group(self):
+        return Group(self.img,self.name)
+
+class PNPB(component):
+    def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name, color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+
+        self.name.shift(RIGHT*(-1.5)*size)
+
+        self.img = ImageMobject("texture\pnp2").scale(0.15089880304678998911860718171926*size)  
+        self.img = self.img.shift(RIGHT*x0+UP*(y0))
+        self.ne = [x0-0.5*size, y0+0.5*size, 0]
+        self.nc = [x0-0.5*size, y0-0.5*size, 0]
+        self.nb= [x0+0.5*size, y0, 0]
+    
+    def get_group(self):
+        return Group(self.img,self.name)
+    
+
+
 
 
 #################################  SCRS ################################
@@ -234,6 +373,38 @@ class V(component):
         self.name.shift(RIGHT*(-1.1)*size)
 
         self.img = ImageMobject("texture\V").scale(0.16981132075471698113207547169811*size)  
+        self.img = self.img.shift(RIGHT*x0+UP*(y0))
+        self.n0 = [x0, y0+0.5*size, 0]
+        self.n1 = [x0, y0-0.5*size, 0]
+            
+    def get_group(self):
+        return Group(self.img,self.name, self.value)
+    
+class A(component):
+    def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
+                 value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name, color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+
+
+        self.value = Text(
+            value_text,
+            font_size = 30*size*value_font_scale,
+            color = color_value
+        )
+
+        self.value.shift(DOWN*0.25*size
+                          +RIGHT*(-0.6)*size
+                          +RIGHT*(x0+value_right_shift_offset)
+                          +UP*(y0+value_up_shift_offset))
+        self.name.shift(RIGHT*(-1.1)*size)
+
+        self.img = ImageMobject("texture\A").scale(0.15089880304678998911860718171926*size)  
         self.img = self.img.shift(RIGHT*x0+UP*(y0))
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
@@ -282,11 +453,11 @@ class node(component):
                           +RIGHT*(0.25)*size
                           +RIGHT*(x0+name_right_shift_offset)
                           +UP*(y0+name_up_shift_offset))
-        self.my_dot = Dot(color=color).shift(RIGHT*(x0+name_right_shift_offset)
-                                            +UP*(y0+name_up_shift_offset))
+        self.dot = Dot(color=color).shift(RIGHT*(x0)
+                                            +UP*(y0))
     
         self.n0 = [x0, y0, 0]
     
     def get_group(self):
-        return Group(self.my_dot,self.name)
+        return Group(self.dot,self.name)
 

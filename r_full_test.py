@@ -60,13 +60,13 @@ class Myscene(Scene):
         ]
         Sub_Net1 = Net(Sub_Net1)
         Net_List.merge_subnet(Sub_Net1)
-        Net_List_img=Net.net_mobject(Net_List)
+        Net_List_img=Net.img(Net_List)
 
         Vdd_line = connect_terminal([-1,3,0],[1,3,0])
         Vdd = Text("Vdd",font_size=20).shift(UP*3.3)
         Vg = Text("Vg",font_size=20,color = RED).shift(LEFT*1.4)
         Net_List.add_line(Vdd_line)
-        Net_List_img=Net.net_mobject(Net_List)
+        Net_List_img=Net.img(Net_List)
 
 
 

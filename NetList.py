@@ -19,7 +19,7 @@ class Net():
     def net_length(self):
         return len(self.lines)
     
-    def net_mobject(self):
+    def img(self):
         net_list_object_temp = self.lines[0]
         if len(self.lines) == 1 :
             return net_list_object_temp

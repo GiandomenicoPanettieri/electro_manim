@@ -1,12 +1,12 @@
 from manim import *
 from typing import cast
-from NetList import *
+from NetList import Net
 
 ###############################  USEFULL FUNCTIONS  #################################
 def connect_terminal(n0,n1,color = WHITE):
     return Line(n0,n1,color=color)
 
-def connect_nodes_oriented(node_list):
+def connect_oriented(node_list):
     local_node_list = node_list
     subnet =[]
     
@@ -16,3 +16,13 @@ def connect_nodes_oriented(node_list):
         for i in range(0,len(local_node_list)-1):
             subnet.append(connect_terminal(local_node_list[i],local_node_list[i+1]))
     return subnet
+
+
+def connect_point_list (net_array):
+    local_net_list = Net()
+    if len(net_array) == 1 : 
+        return Net(connect_oriented(net_array[0]))
+    else:
+        for i in range(0,len(net_array)):
+            local_net_list.merge_subnet(Net(connect_oriented(net_array[i]))) 
+    return local_net_list

@@ -1,6 +1,5 @@
 from manim import *
 from typing import cast
-from utils import *
 
 class Net():
     def __init__(self, lines = []):

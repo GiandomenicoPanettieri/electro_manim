@@ -1,6 +1,7 @@
 from manim import *
 from typing import cast
 from NetList import Net
+from components import *
 
 ###############################  USEFULL FUNCTIONS  #################################
 def connect_terminal(n0,n1,color = WHITE):
@@ -26,3 +27,11 @@ def connect_point_list (net_array):
         for i in range(0,len(net_array)):
             local_net_list.merge_subnet(Net(connect_oriented(net_array[i]))) 
     return local_net_list
+
+def rotate_img(comp, angle, about_point):
+        component = cast(component, comp)
+        component.img.rotate(angle,about_point)
+        component.n0 = component.n0+[component.size*component.n0[2]*np.sin(angle),
+                           component.size*component.n0[2]*np.cos(angle)-component.n0[2],
+                           0]
+        return component

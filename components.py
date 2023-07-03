@@ -65,7 +65,7 @@ class component():
 ################################ RESISTOR ##################################
 
 class R(component):
-    def __init__(self, name, x0,y0,size,value_text,
+    def __init__(self, name, x0,y0,size,value_text= " ",
                  name_font_scale=1,value_font_scale=1,
                  name_right_shift_offset=0,value_right_shift_offset=0,
                  name_up_shift_offset=0,value_up_shift_offset=0,
@@ -92,27 +92,32 @@ class R(component):
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
         self.size = size
+        self.center = [x0,y0,0]
     
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        n0 = np.array(self.n0)
+        n1 = np.array(self.n1)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.n0 = (rot_mat @ (n0-center))+center
+        self.n1 = (rot_mat @ (n1-center))+center
+
+
     def get_group(self):
         return Group(self.img,self.name,self.value)
-    
-    def rotate_img(self, angle, about_point):
-        self.img = self.img.rotate(angle = angle, about_point = about_point)
-        a = self.n0
-        b = [self.size*self.n0[1]*np.sin(angle),
-                           self.size*self.n0[1]*np.cos(angle)-self.n0[2],
-                           0]
-        self.n0 = []
-        for i in range(len(a)):
-            self.n0.append(a[i] + b[i])
-
 
         
     
 ################################ CAPACITOR ##################################
 
 class C(component):
-    def __init__(self, name, x0,y0,size,value_text,name_font_scale=1,
+    def __init__(self, name, x0,y0,size,value_text= " ",name_font_scale=1,
                  value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
                  name_up_shift_offset=0,value_up_shift_offset=0,
                  color_name = WHITE, color_value = WHITE):
@@ -140,13 +145,31 @@ class C(component):
         self.img = self.img.shift(RIGHT*x0+UP*y0)
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        n0 = np.array(self.n0)
+        n1 = np.array(self.n1)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.n0 = (rot_mat @ (n0-center))+center
+        self.n1 = (rot_mat @ (n1-center))+center
+
+
     
     def get_group(self):
         return Group(self.img,self.name,self.value)
 
 #################################  INDUCTOR ################################
 class L(component):
-    def __init__(self, name, x0,y0,size,value_text,name_font_scale=1,
+    def __init__(self, name, x0,y0,size,value_text = "",name_font_scale=1,
                  value_font_scale=1,name_right_shift_offset=0,value_right_shift_offset=0,
                  name_up_shift_offset=0,value_up_shift_offset=0,
                  color_name = WHITE, color_value = WHITE):
@@ -171,6 +194,23 @@ class L(component):
         self.img = self.img.shift(RIGHT*x0+UP*y0)
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        n0 = np.array(self.n0)
+        n1 = np.array(self.n1)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.n0 = (rot_mat @ (n0-center))+center
+        self.n1 = (rot_mat @ (n1-center))+center
+
     
     def get_group(self):
         return Group(self.img,self.name,self.value)
@@ -195,6 +235,43 @@ class NMOSA(component):
         self.nd = [x0+0.5*size, y0+0.5*size, 0]
         self.ns = [x0+0.5*size, y0-0.5*size, 0]
         self.ng = [x0-0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nd = np.array(self.nd)
+        ns = np.array(self.ns)
+        ng = np.array(self.ng)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nd = (rot_mat @ (nd-center))+center
+        self.ns = (rot_mat @ (ns-center))+center
+        self.ng = (rot_mat @ (ng-center))+center
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nd = np.array(self.nd)
+        ns = np.array(self.ns)
+        ng = np.array(self.ng)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nd = (rot_mat @ (nd-center))+center
+        self.ns = (rot_mat @ (ns-center))+center
+        self.ng = (rot_mat @ (ng-center))+center
+
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -217,6 +294,24 @@ class NMOSB(component):
         self.nd = [x0-0.5*size, y0+0.5*size, 0]
         self.ns = [x0-0.5*size, y0-0.5*size, 0]
         self.ng = [x0+0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nd = np.array(self.nd)
+        ns = np.array(self.ns)
+        ng = np.array(self.ng)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nd = (rot_mat @ (nd-center))+center
+        self.ns = (rot_mat @ (ns-center))+center
+        self.ng = (rot_mat @ (ng-center))+center
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -241,6 +336,24 @@ class PMOSA(component):
         self.ns = [x0+0.5*size, y0+0.5*size, 0]
         self.nd = [x0+0.5*size, y0-0.5*size, 0]
         self.ng = [x0-0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nd = np.array(self.nd)
+        ns = np.array(self.ns)
+        ng = np.array(self.ng)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nd = (rot_mat @ (nd-center))+center
+        self.ns = (rot_mat @ (ns-center))+center
+        self.ng = (rot_mat @ (ng-center))+center
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -263,6 +376,24 @@ class PMOSB(component):
         self.ns = [x0-0.5*size, y0+0.5*size, 0]
         self.nd = [x0-0.5*size, y0-0.5*size, 0]
         self.ng = [x0+0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nd = np.array(self.nd)
+        ns = np.array(self.ns)
+        ng = np.array(self.ng)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nd = (rot_mat @ (nd-center))+center
+        self.ns = (rot_mat @ (ns-center))+center
+        self.ng = (rot_mat @ (ng-center))+center
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -286,6 +417,24 @@ class NPNA(component):
         self.nc = [x0+0.5*size, y0+0.5*size, 0]
         self.ne = [x0+0.5*size, y0-0.5*size, 0]
         self.nb = [x0-0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nc = np.array(self.nc)
+        ne = np.array(self.ne)
+        nb = np.array(self.nb)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nc = (rot_mat @ (nc-center))+center
+        self.ne = (rot_mat @ (ne-center))+center
+        self.nb = (rot_mat @ (nb-center))+center
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -308,6 +457,25 @@ class NPNB(component):
         self.nc = [x0-0.5*size, y0+0.5*size, 0]
         self.ne = [x0-0.5*size, y0-0.5*size, 0]
         self.nb = [x0+0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nc = np.array(self.nc)
+        ne = np.array(self.ne)
+        nb = np.array(self.nb)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nc = (rot_mat @ (nc-center))+center
+        self.ne = (rot_mat @ (ne-center))+center
+        self.nb = (rot_mat @ (nb-center))+center
+    
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -331,6 +499,25 @@ class PNPA(component):
         self.ne = [x0+0.5*size, y0+0.5*size, 0]
         self.nc = [x0+0.5*size, y0-0.5*size, 0]
         self.nb = [x0-0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nc = np.array(self.nc)
+        ne = np.array(self.ne)
+        nb = np.array(self.nb)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nc = (rot_mat @ (nc-center))+center
+        self.ne = (rot_mat @ (ne-center))+center
+        self.nb = (rot_mat @ (nb-center))+center
+    
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -353,6 +540,25 @@ class PNPB(component):
         self.ne = [x0-0.5*size, y0+0.5*size, 0]
         self.nc = [x0-0.5*size, y0-0.5*size, 0]
         self.nb= [x0+0.5*size, y0, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nc = np.array(self.nc)
+        ne = np.array(self.ne)
+        nb = np.array(self.nb)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nc = (rot_mat @ (nc-center))+center
+        self.ne = (rot_mat @ (ne-center))+center
+        self.nb = (rot_mat @ (nb-center))+center
+    
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -390,6 +596,22 @@ class V(component):
         self.img = self.img.shift(RIGHT*x0+UP*(y0))
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        n0 = np.array(self.n0)
+        n1 = np.array(self.n1)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.n0 = (rot_mat @ (n0-center))+center
+        self.n1 = (rot_mat @ (n1-center))+center
             
     def get_group(self):
         return Group(self.img,self.name, self.value)
@@ -422,6 +644,22 @@ class A(component):
         self.img = self.img.shift(RIGHT*x0+UP*(y0))
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        n0 = np.array(self.n0)
+        n1 = np.array(self.n1)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.n0 = (rot_mat @ (n0-center))+center
+        self.n1 = (rot_mat @ (n1-center))+center
             
     def get_group(self):
         return Group(self.img,self.name, self.value)
@@ -441,6 +679,21 @@ class GND(component):
         self.img = ImageMobject("texture\gnd").scale(0.16687268232385661310259579*0.5*size)  
         self.img = self.img.shift(RIGHT*x0+UP*(y0))
         self.n0 = [x0, y0+0.25*size, 0]
+        self.size = size
+        self.center = [x0,y0,0]
+    
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        n0 = np.array(self.n0)
+        n1 = np.array(self.n1)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.n0 = (rot_mat @ (n0-center))+center
     
     def get_group(self):
         return Group(self.img,self.name)
@@ -467,7 +720,7 @@ class node(component):
                           +RIGHT*(0.25)*size
                           +RIGHT*(x0+name_right_shift_offset)
                           +UP*(y0+name_up_shift_offset))
-        self.dot = Dot(color=color).shift(RIGHT*(x0)
+        self.img = Dot(color=color).shift(RIGHT*(x0)
                                             +UP*(y0))
     
         self.n0 = [x0, y0, 0]

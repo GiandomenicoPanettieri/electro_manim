@@ -91,9 +91,19 @@ class R(component):
         self.img = self.img.shift(RIGHT*x0+UP*y0)
         self.n0 = [x0, y0+0.5*size, 0]
         self.n1 = [x0, y0-0.5*size, 0]
+        self.size = size
     
     def get_group(self):
         return Group(self.img,self.name,self.value)
+    
+    def rotate_img(self, angle, about_point):
+        self.img = self.img.rotate(self.img,angle = angle, about_point = about_point)
+        self.n0 = self.n0+[self.size*self.n0[2]*np.sin(angle),
+                           self.size*self.n0[2]*np.cos(angle)-self.n0[2],
+                           0]
+
+
+        
     
 ################################ CAPACITOR ##################################
 

@@ -2,8 +2,9 @@ from manim import *
 from typing import cast
 
 class Net():
-    def __init__(self, lines = []):
+    def __init__(self, lines = [], points=[]):
         self.lines = lines
+        self.points = points
     
     '''def assign_net(self, line_list): 
         self.lines = line_list'''
@@ -27,5 +28,6 @@ class Net():
                 net_list_object = Group(net_list_object_temp,self.lines[i])
                 net_list_object_temp = net_list_object
             return net_list_object
+
         
 

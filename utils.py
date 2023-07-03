@@ -7,7 +7,7 @@ from components import *
 def connect_terminal(n0,n1,color = WHITE):
     return Line(n0,n1,color=color)
 
-def connect_oriented(node_list):
+def connect_oriented(node_list, color=WHITE):
     local_node_list = node_list
     subnet =[]
     
@@ -15,17 +15,17 @@ def connect_oriented(node_list):
         return print("node list has less than one node")
     else:
         for i in range(0,len(local_node_list)-1):
-            subnet.append(connect_terminal(local_node_list[i],local_node_list[i+1]))
+            subnet.append(connect_terminal(local_node_list[i],local_node_list[i+1], color=color))
     return subnet
 
 
-def connect_point_list (net_array):
-    local_net_list = Net()
+def connect_point_list (net_array, color=   WHITE):
+    local_net_list = Net(points=net_array)
     if len(net_array) == 1 : 
-        return Net(connect_oriented(net_array[0]))
+        return Net(connect_oriented(net_array[0], color=color))
     else:
         for i in range(0,len(net_array)):
-            local_net_list.merge_subnet(Net(connect_oriented(net_array[i]))) 
+            local_net_list.merge_subnet(Net(connect_oriented(net_array[i], color=color))) 
     return local_net_list
 
 def rotate_img(comp, angle, about_point):

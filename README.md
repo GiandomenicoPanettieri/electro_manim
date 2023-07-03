@@ -3,7 +3,6 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/your_username/electro-Manim/blob/main/LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9-blue.svg)](https://www.python.org/downloads/)
 
-![Electro-Manim Banner](https://example.com/banner.jpg)
 
 **Electro-Manim** is a repository that utilizes Manim to create visually appealing representations of electronic circuits and animations.
 

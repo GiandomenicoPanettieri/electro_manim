@@ -97,10 +97,15 @@ class R(component):
         return Group(self.img,self.name,self.value)
     
     def rotate_img(self, angle, about_point):
-        self.img = self.img.rotate(self.img,angle = angle, about_point = about_point)
-        self.n0 = self.n0+[self.size*self.n0[2]*np.sin(angle),
+        self.img = self.img.rotate(angle = angle, about_point = about_point)
+        self.n0 = self.n0
+        a = self.n0
+        b = [self.size*self.n0[2]*np.sin(angle),
                            self.size*self.n0[2]*np.cos(angle)-self.n0[2],
                            0]
+        self.n0 = []
+        for i in range(len(a)):
+            self.n0.append(a[i] + b[i])
 
 
         

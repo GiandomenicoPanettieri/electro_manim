@@ -25,7 +25,9 @@ class Myscene(Scene):
         
         #resonator
         R1 = R("R1", 0,2,2, " ")
-        R1.rotate_img(PI/4, [0,2,0])
+        R1.rotate_img(PI/2, [0,2,0])
+        print(R1.n0)
+        
         self.add(R1.img)
 
         

@@ -728,3 +728,73 @@ class node(component):
     def get_group(self):
         return Group(self.dot,self.name)
 
+
+
+class opamp(component):
+    def __init__(self, x0,y0,size=1,value_text=" ",name=" ",name_font_scale=0.7,
+                 value_font_scale=1,name_right_shift_offset=-0.25,value_right_shift_offset=0,
+                 name_up_shift_offset=0,value_up_shift_offset=0, color=WHITE,
+                 color_name = WHITE, color_value = WHITE):
+        component.__init__(self, name, x0,y0,size,value_text,
+                 color_name , color_value,
+                 name_font_scale,value_font_scale,
+                 name_right_shift_offset,value_right_shift_offset,
+                 name_up_shift_offset,value_up_shift_offset)
+        
+
+        plus = Text("+").shift(RIGHT*(-0.8+x0)+UP*(0.6+y0))
+        plus.scale(0.7*size)
+        minus= Text("-").shift(RIGHT*(-0.8+x0)+UP*(-0.6+y0))
+        minus.scale(0.7*size)
+        op_name = Text(name,color = color_name).shift((x0+name_right_shift_offset)*RIGHT+(y0+name_up_shift_offset)*UP)
+        op_name.scale(size*name_font_scale)
+        
+        net_point = [
+            [[-1*size+x0,-1*size+y0,0],[-1*size+x0,1*size+y0,0],[1*size+x0,0*size+y0,0],[-1*size+x0,-1*size+y0,0]],
+            [[-1*size+x0,0.7*size+y0,0],[-1.5*size+x0,0.7*size+y0,0]],
+            [[-1*size+x0,-0.7*size+y0,0],[-1.5*size+x0,-0.7*size+y0,0]],
+            [[1*size+x0 ,0*size+y0,0],[1.5*size+x0,0*size+y0,0]]
+        ]
+
+        self.NetList = connect_point_list(net_point,color = color)
+        
+        self.circuit= (Write(self.NetList.lines[0]),
+                  Write(self.NetList.lines[1]),
+                  Write(self.NetList.lines[2]),
+                  Write(self.NetList.lines[3]),
+                  Write(self.NetList.lines[4]),
+                  Write(self.NetList.lines[5]),
+                  Write(plus),Write(minus),
+                  Write(op_name))
+        
+        self.img = Group(self.NetList.img(),
+                                 plus,
+                                 minus,
+                                 op_name)
+        
+        self.nminus = [-1.5*size+x0,-0.7*size+y0,0]
+        self.nplus = [-1.5*size+x0,0.7*size+y0,0]
+        self.nout = [1.5*size+x0,0*size+y0,0]
+        self.center = [x0,y0,0]
+        
+    def rotate_component(self, angle):
+        self.img = self.img.rotate(angle = angle, about_point = self.center)
+        
+        nminus = np.array(self.nminus)
+        nplus = np.array(self.nplus)
+        nout = np.array(self.nout)
+        center = np.array(self.center) 
+        rot_mat = np.array([
+            [np.cos(angle),(-1)*np.sin(angle),0],
+            [np.sin(angle),np.cos(angle),0],
+            [0, 0, 1]
+        ])
+        self.nminus = (rot_mat @ (nminus-center))+center
+        self.nplus = (rot_mat @ (nplus-center))+center
+        self.nout = (rot_mat @ (nout-center))+center
+
+        
+        
+        
+
+
